@@ -1,5 +1,6 @@
 name: Build APK
 
+# Workflow trigger
 on:
   push:
     branches:
@@ -11,23 +12,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Setup Flutter with exact version
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.13.0
 
+      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Build debug APK
       - name: Build debug APK
         run: flutter build apk --debug
 
+      # Upload APK artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
-
